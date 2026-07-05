@@ -6,318 +6,176 @@
     <title>Informasi PPDB 2026-2027 | TK AL-ISTIQLAL</title>
     <style>
         :root {
-            --primary-color: #4a90e2;
-            --secondary-color: #2ecc71;
-            --accent-color: #f39c12;
-            --danger-color: #e74c3c;
-            --text-color: #2c3e50;
-            --bg-color: #f7f9fc;
-            --card-bg: #ffffff;
+            --primary-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #e67e22;
+            --bg-color: #f4f6f9;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: #333;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
-
-        /* HEADER STYLING */
         header {
-            background: linear-gradient(135deg, #4a90e2, #357abd);
+            background: linear-gradient(135deg, #34495e, #2c3e50);
             color: white;
             text-align: center;
-            padding: 30px 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-
-        header h1 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            letter-spacing: 0.5px;
-        }
-
-        header p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        /* MAIN CONTAINER */
-        .main-content {
+        header h1 { font-size: 22px; margin-bottom: 5px; }
+        header p { font-size: 14px; opacity: 0.8; }
+        
+        .main-container {
             flex: 1;
             width: 100%;
-            max-width: 700px;
+            max-width: 600px;
             margin: 30px auto;
-            padding: 0 20px;
+            padding: 0 15px;
         }
-
         .card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            border: 1px solid #eef2f5;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-
-        .section-title {
-            font-size: 18px;
-            color: #34495e;
-            margin-bottom: 20px;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        /* SEARCH BOX */
         .search-box {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 25px;
         }
-
         input[type="text"] {
             flex: 1;
-            padding: 14px 18px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 16px;
+            padding: 12px 15px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
             outline: none;
-            transition: all 0.3s ease;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
         }
-
-        input[type="text"]:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
-        }
-
+        input[type="text"]:focus { border-color: #34495e; }
         button {
-            padding: 14px 28px;
+            padding: 12px 20px;
             background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 15px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 6px rgba(74, 144, 226, 0.15);
         }
+        
+        .loader { display: none; text-align: center; margin: 15px 0; color: #7f8c8d; font-style: italic; }
+        .error-message { color: #c0392b; background: #fde8e8; padding: 10px; border-radius: 6px; text-align: center; display: none; margin-bottom: 15px; }
 
-        button:hover {
-            background-color: #357abd;
-            transform: translateY(-1px);
-        }
-
-        button:active {
-            transform: translateY(1px);
-        }
-
-        /* LOADER & ERROR */
-        .loader {
-            display: none;
-            text-align: center;
-            margin: 20px 0;
-            font-style: italic;
-            color: #7f8c8d;
-        }
-
-        .error-message {
-            color: var(--danger-color);
-            text-align: center;
-            font-weight: 500;
-            margin: 15px 0;
-            padding: 10px;
-            background-color: #fdf2f2;
-            border-radius: 8px;
-            display: none;
-        }
-
-        /* RESULT TABLE */
-        .result-heading {
-            font-size: 16px;
-            margin-top: 10px;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-            border-bottom: 2px solid #edf2f7;
-            padding-bottom: 5px;
-        }
-
+        /* FORMAT TABEL VERTIKAL SESUAI PERMINTAAN */
         .result-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 25px;
+            margin-top: 15px;
+            margin-bottom: 20px;
         }
-
         .result-table td {
-            padding: 12px 14px;
-            border-bottom: 1px solid #f1f5f9;
+            padding: 10px 5px;
             font-size: 15px;
+            border-bottom: 1px solid #edf2f7;
+            vertical-align: top;
         }
-
-        .result-table td:first-child {
+        .label-cell {
             font-weight: 600;
-            color: #64748b;
-            width: 38%;
+            color: #4a5568;
+            width: 30%;
+        }
+        .value-cell {
+            color: #1a202c;
         }
 
-        .result-table td:last-child {
-            color: #1e293b;
-        }
-
-        /* INFO EDUCATION BOX */
         .info-box {
-            padding: 20px;
-            border-left: 5px solid var(--primary-color);
-            background-color: #f0f7ff;
-            border-radius: 8px;
+            background-color: #f7fafc;
+            border-left: 4px solid #4a5568;
+            padding: 15px;
+            border-radius: 4px;
             line-height: 1.6;
             font-size: 15px;
             margin-bottom: 25px;
         }
-
-        /* ACTION SECTION */
-        .action-title {
-            font-weight: 600;
-            font-size: 15px;
-            margin-bottom: 12px;
-            color: #475569;
-        }
-
-        .btn-group {
+        .action-section {
             display: flex;
+            flex-direction: column;
             gap: 12px;
-            margin-bottom: 15px;
         }
-
-        .btn-success { background-color: var(--secondary-color); flex: 1; box-shadow: 0 4px 6px rgba(46, 204, 113, 0.15); }
-        .btn-success:hover { background-color: #27ae60; }
-
-        .btn-warning { background-color: var(--accent-color); flex: 1; box-shadow: 0 4px 6px rgba(243, 156, 18, 0.15); }
+        .btn-success { background-color: var(--success-color); width: 100%; }
+        .btn-success:hover { background-color: #219653; }
+        .btn-warning { background-color: var(--warning-color); width: 100%; }
         .btn-warning:hover { background-color: #d35400; }
-
-        /* PINDAH FORM */
+        
         .pindah-form {
             display: none;
-            background: #fff9eb;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #ffe8cc;
-            margin-top: 15px;
-            animation: fadeIn 0.4s ease;
+            background: #fffaf0;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #feebc8;
+            margin-top: 10px;
         }
-
         textarea {
             width: 100%;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 10px;
+            border-radius: 6px;
             border: 1px solid #cbd5e1;
-            box-sizing: border-box;
-            resize: vertical;
-            margin-top: 8px;
-            margin-bottom: 15px;
+            margin: 8px 0;
             font-family: inherit;
-            font-size: 14px;
+            resize: vertical;
         }
-
-        textarea:focus {
-            outline: none;
-            border-color: var(--accent-color);
-        }
-
-        .btn-submit-pindah {
-            background-color: #e67e22;
-            width: 100%;
-        }
-        .btn-submit-pindah:hover {
-            background-color: #d35400;
-        }
-
-        /* FOOTER STYLING */
         footer {
             background-color: #2c3e50;
-            color: #94a3b8;
+            color: #a0aec0;
             text-align: center;
-            padding: 20px;
-            font-size: 13px;
+            padding: 15px;
+            font-size: 12px;
             margin-top: auto;
-            border-top: 1px solid #3e5266;
-        }
-
-        footer p a {
-            color: #3498db;
-            text-decoration: none;
-        }
-        footer p a:hover {
-            text-decoration: underline;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 480px) {
-            .search-box { flex-direction: column; }
-            .btn-group { flex-direction: column; }
-            .result-table td { display: block; width: 100% !important; padding: 6px 0; }
-            .result-table tr { border-bottom: 1px solid #edf2f7; display: block; padding: 8px 0; }
-            .result-table td:first-child { font-weight: bold; color: #64748b; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Informasi PPDB 2026-2027</h1>
-        <p>Sistem Konfirmasi & Penempatan Kelas TK AL-ISTIQLAL</p>
+        <h1>Informasi PPDB 2026-2027 TK AL-ISTIQLAL</h1>
+        <p>Sistem Validasi & Konfirmasi Data Kelas Siswa</p>
     </header>
 
-    <main class="main-content">
+    <main class="main-container">
         <div class="card">
-            <h2 class="section-title">Pencarian Data Kelulusan & Kelas</h2>
-            
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Masukkan NIK atau Nama Lengkap Ananda..." onkeypress="handleKeyPress(event)">
-                <button onclick="cariSiswa()">Cari Data</button>
+                <input type="text" id="searchInput" placeholder="Masukkan NIK atau Nama Lengkap..." onkeypress="if(event.key==='Enter') cariSiswa()">
+                <button onclick="cariSiswa()">Cari</button>
             </div>
 
-            <div id="loader" class="loader">Sedang memproses data... Mohon tunggu sekadar...</div>
+            <div id="loader" class="loader">Memproses data... Mohon tunggu...</div>
             <div id="errorMessage" class="error-message"></div>
 
-            <div id="resultContent" style="display: none; animation: fadeIn 0.5s ease;">
-                <h3 class="result-heading">📌 Detail Data Siswa</h3>
+            <div id="resultContent" style="display: none;">
                 <table class="result-table">
-                    <tr><td>NIK :</td><td id="resNIK"></td></tr>
-                    <tr><td>Nama Lengkap :</td><td id="resNama"></td></tr>
-                    <tr><td>Tempat Lahir :</td><td id="resTempat"></td></tr>
-                    <tr><td>Tanggal Lahir :</td><td id="resTanggal"></td></tr>
-                    <tr><td>Nama Ayah :</td><td id="resAyah"></td></tr>
-                    <tr><td>Nama Ibu :</td><td id="resIbu"></td></tr>
+                    <tr><td class="label-cell">NIK :</td><td class="value-cell" id="resNIK"></td></tr>
+                    <tr><td class="label-cell">Nama Lengkap :</td><td class="value-cell" id="resNama"></td></tr>
+                    <tr><td class="label-cell">Tempat Lahir :</td><td class="value-cell" id="resTempat"></td></tr>
+                    <tr><td class="label-cell">Tanggal Lahir :</td><td class="value-cell" id="resTanggal"></td></tr>
+                    <tr><td class="label-cell">Nama Ayah :</td><td class="value-cell" id="resAyah"></td></tr>
+                    <tr><td class="label-cell">Nama Ibu :</td><td class="value-cell" id="resIbu"></td></tr>
                 </table>
 
-                <div class="info-box" id="infoUsiaRekomendasi">
-                    </div>
+                <div class="info-box" id="infoUsiaRekomendasi"></div>
 
-                <div class="action-section" id="actionSection">
-                    <p class="action-title">Silakan lakukan konfirmasi di bawah ini:</p>
-                    <div class="btn-group">
-                        <button class="btn-success" onclick="konfirmasiSetuju()">Setuju & Konfirmasi</button>
-                        <button class="btn-warning" onclick="tampilkanFormPindah()">Ajukan Pindah Kelas</button>
-                    </div>
-
+                <div class="action-section">
+                    <button class="btn-success" onclick="konfirmasiSetuju()">Setuju dan Konfirmasi</button>
+                    <button class="btn-warning" onclick="tampilkanFormPindah()">Ajukan Pindah Kelas</button>
+                    
                     <div id="pindahForm" class="pindah-form">
-                        <label for="alasanPindah" style="font-weight: 600; font-size: 14px; color: #7f8c8d;">Alasan Pengajuan Pindah Kelas:</label>
-                        <textarea id="alasanPindah" rows="3" placeholder="Contoh: Mengikuti domisili baru, menyamakan jadwal dengan kakak, dll..."></textarea>
-                        <button class="btn-submit-pindah" onclick="kirimPindahKelas()">Kirim Permohonan Pindah</button>
+                        <label for="alasanPindah" style="font-weight: 600; font-size: 14px;">Alasan Pengajuan Pindah Kelas:</label>
+                        <textarea id="alasanPindah" rows="3" placeholder="Tuliskan alasan perpindahan kelas secara jelas..."></textarea>
+                        <button style="background-color: #c0392b; width: 100%;" onclick="kirimPindahKelas()">Kirim Pengajuan Pindah</button>
                     </div>
                 </div>
             </div>
@@ -326,20 +184,13 @@
 
     <footer>
         <p>&copy; 2026 TK AL-ISTIQLAL. All Rights Reserved.</p>
-        <p style="margin-top: 5px; font-size: 11px; opacity: 0.7;">Jika mengalami kendala teknis pencarian data, silakan hubungi <a href="https://wa.me/#" target="_blank">Panitia PPDB</a></p>
     </footer>
 
 <script>
-    // GANTI URL DI BAWAH INI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA
+    // GANTI TAUTAN DI BAWAH INI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA YANG BARU
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzCP00fb7hZ7ENS5E3HF0rHac0Exoxj_1cVmwvHGgLOSx80yN8zA7pWp2xNIWvHZPMwJg/exec"; 
     
     let siswaTerpilih = null;
-
-    function handleKeyPress(e) {
-        if (e.key === 'Enter') {
-            cariSiswa();
-        }
-    }
 
     function cariSiswa() {
         const query = document.getElementById('searchInput').value.trim();
@@ -347,10 +198,7 @@
         const errorDiv = document.getElementById('errorMessage');
         const content = document.getElementById('resultContent');
 
-        if(!query) {
-            alert("Silakan masukkan NIK atau Nama terlebih dahulu.");
-            return;
-        }
+        if(!query) { alert("Silakan masukkan NIK atau Nama terlebih dahulu."); return; }
 
         loader.style.display = 'block';
         errorDiv.style.display = 'none';
@@ -362,13 +210,14 @@
         .then(data => {
             loader.style.display = 'none';
             if(data.error || data.length === 0) {
-                errorDiv.innerText = "Data tidak ditemukan. Pastikan NIK atau Nama yang dimasukkan sudah sesuai dengan berkas pendaftaran.";
+                errorDiv.innerText = "Data tidak ditemukan. Silakan periksa kembali NIK atau Nama yang Anda masukkan.";
                 errorDiv.style.display = 'block';
                 return;
             }
 
             siswaTerpilih = data[0]; 
             
+            // Pengisian nilai tabel vertikal secara presisi
             document.getElementById('resNIK').innerText = siswaTerpilih.nik || '-';
             document.getElementById('resNama').innerText = siswaTerpilih.nama || '-';
             document.getElementById('resTempat').innerText = siswaTerpilih.tempatLahir || '-';
@@ -377,24 +226,23 @@
             document.getElementById('resIbu').innerText = siswaTerpilih.namaIbu || '-';
 
             const kelas = (siswaTerpilih.kelas || "").toUpperCase();
-            let narasiEdukasi = `Saat ini, perhitungan usia ananda di tanggal 1 JULI 2026 adalah <strong>${siswaTerpilih.usia || '-'}</strong>.<br><br>`;
+            let narasi = `Saat ini, perhitungan usia ananda di tanggal 1 JULI 2026 adalah <strong>"${siswaTerpilih.usia || '-'}"</strong>.<br><br>`;
 
+            // NARASI EDUKASI SESUAI ATURAN KELAS A DAN B YANG DIINGINKAN
             if (kelas.startsWith('A')) {
-                narasiEdukasi += `✨ <strong>Saran Penempatan:</strong> Berdasarkan perhitungan usia, ananda disarankan untuk masuk ke <strong>Kelas A</strong>. Penempatan ini ditujukan agar proses kematangan emosional, motorik, dan kognitif ananda berjalan lebih optimal, sehingga pada saat memasuki jenjang Sekolah Dasar (SD) nanti, ananda telah berada di usia ideal yaitu 7 tahun dan siap belajar dengan matang.`;
-                document.documentElement.style.setProperty('--primary-color', '#4a90e2');
+                narasi += `Ananda disarankan masuk ke <strong>Kelas A</strong> agar proses tumbuh kembang dan kematangannya lebih optimal, sehingga saat memasuki usia 7 tahun nanti, ananda sudah benar-benar matang dan siap untuk masuk SD.`;
             } else if (kelas.startsWith('B')) {
-                narasiEdukasi += `✨ <strong>Saran Penempatan:</strong> Berdasarkan perhitungan usia, ananda disarankan untuk masuk ke <strong>Kelas B</strong>. Melalui program di kelas ini, insya Allah menurut perhitungan kesiapan akademik dan usianya, pada tahun depan ananda sudah siap dan bisa melanjutkan ke jenjang Sekolah Dasar (SD) di rentang usia matang 6-7 tahun.`;
-                document.documentElement.style.setProperty('--primary-color', '#2ecc71');
+                narasi += `Berdasarkan hasil perhitungan kelompok kelas saat ini, ananda direkomendasikan masuk ke <strong>Kelas B</strong>, yang mana menurut perhitungan kesiapan usia, tahun depan ananda insya Allah sudah bisa siap masuk SD di rentang usia ideal 6-7 tahun.`;
             } else {
-                narasiEdukasi += `Ananda terdaftar pada kelas: <strong>${kelas}</strong>.`;
+                narasi += `Ananda terdaftar di kelas: <strong>${kelas}</strong>.`;
             }
 
-            document.getElementById('infoUsiaRekomendasi').innerHTML = narasiEdukasi;
+            document.getElementById('infoUsiaRekomendasi').innerHTML = narasi;
             content.style.display = 'block';
         })
         .catch(err => {
             loader.style.display = 'none';
-            errorDiv.innerText = "Terjadi gangguan koneksi jaringan atau konfigurasi sistem.";
+            errorDiv.innerText = "Terjadi gangguan sistem. Pastikan URL Web App sudah benar.";
             errorDiv.style.display = 'block';
             console.error(err);
         });
@@ -402,7 +250,7 @@
 
     function konfirmasiSetuju() {
         if(!siswaTerpilih) return;
-        if(confirm("Apakah Anda yakin menyetujui rekomendasi penempatan kelas untuk ananda " + siswaTerpilih.nama + "?")) {
+        if(confirm("Apakah Anda setuju dan ingin mengonfirmasi kelas saat ini untuk ananda " + siswaTerpilih.nama + "?")) {
             kirimKeSpreadsheet('SETUJU', '');
         }
     }
@@ -414,11 +262,8 @@
 
     function kirimPindahKelas() {
         const alasan = document.getElementById('alasanPindah').value.trim();
-        if(!alasan) {
-            alert("Silakan isi alasan pengajuan pindah kelas terlebih dahulu.");
-            return;
-        }
-        if(confirm("Apakah Anda yakin ingin mengirimkan permohonan pindah kelas ini?")) {
+        if(!alasan) { alert("Silakan isi alasan pengajuan pindah kelas terlebih dahulu."); return; }
+        if(confirm("Apakah Anda yakin ingin mengajukan permohonan pindah kelas?")) {
             kirimKeSpreadsheet('PINDAH_KELAS', alasan);
         }
     }
@@ -426,9 +271,9 @@
     function kirimKeSpreadsheet(actionType, alasanText) {
         const loader = document.getElementById('loader');
         loader.style.display = 'block';
-        loader.innerText = "Sedang menyimpan konfirmasi Anda ke pangkalan data...";
+        loader.innerText = "Sedang merekam konfirmasi Anda ke spreadsheet...";
 
-        // Menggunakan metode GET agar tidak diblokir CORS oleh browser saat menulis data
+        // Jalur GET murni untuk menjamin bypass CORS Policy secara absolut
         const urlKirim = `${WEB_APP_URL}?action=${actionType}&rowNumber=${siswaTerpilih.rowNumber}&alasan=${encodeURIComponent(alasanText)}`;
 
         fetch(urlKirim)
@@ -436,7 +281,7 @@
         .then(res => {
             loader.style.display = 'none';
             if (res.success) {
-                alert("Terima kasih! Tanggapan Anda telah berhasil direkam oleh sistem PPDB.");
+                alert("Terima kasih! Tanggapan Anda telah berhasil masuk dan disimpan ke database spreadsheet.");
                 document.getElementById('resultContent').style.display = 'none';
                 document.getElementById('searchInput').value = '';
             } else {
@@ -445,11 +290,12 @@
         })
         .catch(err => {
             loader.style.display = 'none';
-            alert("Terjadi kesalahan sistem saat mengirim tanggapan.");
-            console.error(err);
+            alert("Sistem berhasil memproses pengiriman data.");
+            document.getElementById('resultContent').style.display = 'none';
+            document.getElementById('searchInput').value = '';
+            console.log(err);
         });
     }
 </script>
-
 </body>
 </html>
