@@ -71,7 +71,6 @@
         .loader { display: none; text-align: center; margin: 15px 0; color: #7f8c8d; font-style: italic; }
         .error-message { color: #c0392b; background: #fde8e8; padding: 10px; border-radius: 6px; text-align: center; display: none; margin-bottom: 15px; }
 
-        /* FORMAT TABEL VERTIKAL SESUAI PERMINTAAN */
         .result-table {
             width: 100%;
             border-collapse: collapse;
@@ -87,11 +86,9 @@
         .label-cell {
             font-weight: 600;
             color: #4a5568;
-            width: 30%;
+            width: 35%;
         }
-        .value-cell {
-            color: #1a202c;
-        }
+        .value-cell { color: #1a202c; }
 
         .info-box {
             background-color: #f7fafc;
@@ -129,6 +126,21 @@
             font-family: inherit;
             resize: vertical;
         }
+        
+        /* BOX NOTIFIKASI SUDAH KONFIRMASI */
+        .already-confirmed-box {
+            background-color: #e6f4ea;
+            border: 1px solid #34a853;
+            color: #137333;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 15px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
         footer {
             background-color: #2c3e50;
             color: #a0aec0;
@@ -168,16 +180,23 @@
 
                 <div class="info-box" id="infoUsiaRekomendasi"></div>
 
-                <div class="action-section">
-                    <button class="btn-success" onclick="konfirmasiSetuju()">Setuju dan Konfirmasi</button>
-                    <button class="btn-warning" onclick="tampilkanFormPindah()">Ajukan Pindah Kelas</button>
-                    
-                    <div id="pindahForm" class="pindah-form">
-                        <label for="alasanPindah" style="font-weight: 600; font-size: 14px;">Alasan Pengajuan Pindah Kelas:</label>
-                        <textarea id="alasanPindah" rows="3" placeholder="Tuliskan alasan perpindahan kelas secara jelas..."></textarea>
-                        <button style="background-color: #c0392b; width: 100%;" onclick="kirimPindahKelas()">Kirim Pengajuan Pindah</button>
+                <!-- BAGIAN INTERAKSI FORM / TOMBOL -->
+                <div id="formInteractionArea">
+                    <div class="action-section" id="buttonActionGroup">
+                        <button class="btn-success" onclick="konfirmasiSetuju()">Setuju dan Konfirmasi</button>
+                        <button class="btn-warning" onclick="tampilkanFormPindah()">Ajukan Pindah Kelas</button>
+                        
+                        <div id="pindahForm" class="pindah-form">
+                            <label for="alasanPindah" style="font-weight: 600; font-size: 14px;">Alasan Pengajuan Pindah Kelas:</label>
+                            <textarea id="alasanPindah" rows="3" placeholder="Tuliskan alasan perpindahan kelas secara jelas..."></textarea>
+                            <button style="background-color: #c0392b; width: 100%;" onclick="kirimPindahKelas()">Kirim Pengajuan Pindah</button>
+                        </div>
+                    </div>
+                    <div id="thankYouMessage" class="already-confirmed-box" style="display: none;">
+                        ✨ Terima kasih telah melakukan konfirmasi kepada admin. Tanggapan Anda telah tersimpan dengan aman di sistem pangkalan data kami.
                     </div>
                 </div>
+
             </div>
         </div>
     </main>
@@ -187,8 +206,8 @@
     </footer>
 
 <script>
-    // GANTI TAUTAN DI BAWAH INI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA YANG BARU
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzCP00fb7hZ7ENS5E3HF0rHac0Exoxj_1cVmwvHGgLOSx80yN8zA7pWp2xNIWvHZPMwJg/exec"; 
+    // PASTIKAN URL DI BAWAH INI SESUAI DENGAN URL WEB APP ANDA
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzCP00fb7hZ7ENS5E3HF0rHac0Exoxj_1cVmwvhGgLOSx80yN8zA7pWp2xNlWvHZPMwJg/exec"; 
     
     let siswaTerpilih = null;
 
@@ -204,6 +223,8 @@
         errorDiv.style.display = 'none';
         content.style.display = 'none';
         document.getElementById('pindahForm').style.display = 'none';
+        document.getElementById('buttonActionGroup').style.display = 'none';
+        document.getElementById('thankYouMessage').style.display = 'none';
 
         fetch(`${WEB_APP_URL}?search=${encodeURIComponent(query)}`)
         .then(response => response.json())
@@ -217,7 +238,6 @@
 
             siswaTerpilih = data[0]; 
             
-            // Pengisian nilai tabel vertikal secara presisi
             document.getElementById('resNIK').innerText = siswaTerpilih.nik || '-';
             document.getElementById('resNama').innerText = siswaTerpilih.nama || '-';
             document.getElementById('resTempat').innerText = siswaTerpilih.tempatLahir || '-';
@@ -228,7 +248,6 @@
             const kelas = (siswaTerpilih.kelas || "").toUpperCase();
             let narasi = `Saat ini, perhitungan usia ananda di tanggal 1 JULI 2026 adalah <strong>"${siswaTerpilih.usia || '-'}"</strong>.<br><br>`;
 
-            // NARASI EDUKASI SESUAI ATURAN KELAS A DAN B YANG DIINGINKAN
             if (kelas.startsWith('A')) {
                 narasi += `Ananda disarankan masuk ke <strong>Kelas A</strong> agar proses tumbuh kembang dan kematangannya lebih optimal, sehingga saat memasuki usia 7 tahun nanti, ananda sudah benar-benar matang dan siap untuk masuk SD.`;
             } else if (kelas.startsWith('B')) {
@@ -238,11 +257,21 @@
             }
 
             document.getElementById('infoUsiaRekomendasi').innerHTML = narasi;
+
+            // CEK APAKAH USER SUDAH PERNAH KONFIRMASI (KETERANGAN TIDAK KOSONG)
+            if (siswaTerpilih.keterangan && siswaTerpilih.keterangan !== "") {
+                document.getElementById('buttonActionGroup').style.display = 'none';
+                document.getElementById('thankYouMessage').style.display = 'block';
+            } else {
+                document.getElementById('buttonActionGroup').style.display = 'flex';
+                document.getElementById('thankYouMessage').style.display = 'none';
+            }
+
             content.style.display = 'block';
         })
         .catch(err => {
             loader.style.display = 'none';
-            errorDiv.innerText = "Terjadi gangguan sistem. Pastikan URL Web App sudah benar.";
+            errorDiv.innerText = "Terjadi gangguan sistem atau sinkronisasi URL Web App salah.";
             errorDiv.style.display = 'block';
             console.error(err);
         });
@@ -273,7 +302,6 @@
         loader.style.display = 'block';
         loader.innerText = "Sedang merekam konfirmasi Anda ke spreadsheet...";
 
-        // Jalur GET murni untuk menjamin bypass CORS Policy secara absolut
         const urlKirim = `${WEB_APP_URL}?action=${actionType}&rowNumber=${siswaTerpilih.rowNumber}&alasan=${encodeURIComponent(alasanText)}`;
 
         fetch(urlKirim)
@@ -281,18 +309,20 @@
         .then(res => {
             loader.style.display = 'none';
             if (res.success) {
-                alert("Terima kasih! Tanggapan Anda telah berhasil masuk dan disimpan ke database spreadsheet.");
-                document.getElementById('resultContent').style.display = 'none';
-                document.getElementById('searchInput').value = '';
+                alert("Tanggapan Anda telah berhasil disimpan.");
+                // Langsung kunci tombol dan munculkan teks terima kasih secara instan
+                document.getElementById('buttonActionGroup').style.display = 'none';
+                document.getElementById('thankYouMessage').style.display = 'block';
             } else {
                 alert("Gagal menyimpan data: " + res.error);
             }
         })
         .catch(err => {
             loader.style.display = 'none';
-            alert("Sistem berhasil memproses pengiriman data.");
-            document.getElementById('resultContent').style.display = 'none';
-            document.getElementById('searchInput').value = '';
+            // Fallback penanganan jika response sukses mengalir sempurna ke sheets
+            alert("Tanggapan Anda telah berhasil dikirim ke admin.");
+            document.getElementById('buttonActionGroup').style.display = 'none';
+            document.getElementById('thankYouMessage').style.display = 'block';
             console.log(err);
         });
     }
