@@ -428,29 +428,24 @@
         loader.style.display = 'block';
         loader.innerText = "Sedang menyimpan konfirmasi Anda ke pangkalan data...";
 
-        const payload = {
-            rowNumber: siswaTerpilih.rowNumber,
-            action: actionType,
-            alasan: alasanText
-        };
+        // Menggunakan metode GET agar tidak diblokir CORS oleh browser saat menulis data
+        const urlKirim = `${WEB_APP_URL}?action=${actionType}&rowNumber=${siswaTerpilih.rowNumber}&alasan=${encodeURIComponent(alasanText)}`;
 
-        fetch(WEB_APP_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        })
-        .then(() => {
+        fetch(urlKirim)
+        .then(response => response.json())
+        .then(res => {
             loader.style.display = 'none';
-            alert("Terima kasih! Tanggapan Anda telah berhasil direkam oleh sistem PPDB.");
-            document.getElementById('resultContent').style.display = 'none';
-            document.getElementById('searchInput').value = '';
+            if (res.success) {
+                alert("Terima kasih! Tanggapan Anda telah berhasil direkam oleh sistem PPDB.");
+                document.getElementById('resultContent').style.display = 'none';
+                document.getElementById('searchInput').value = '';
+            } else {
+                alert("Gagal menyimpan data: " + res.error);
+            }
         })
         .catch(err => {
             loader.style.display = 'none';
-            alert("Gagal mengirim tanggapan. Silakan periksa jaringan Anda.");
+            alert("Terjadi kesalahan sistem saat mengirim tanggapan.");
             console.error(err);
         });
     }
